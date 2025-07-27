@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import useAuthStore from "./store/useAuthStore";
 import { useEffect } from "react";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   const { verify, isAuthenticated } = useAuthStore();
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/forgot-password" element={isAuthenticated ? <Navigate to="/dashboard" /> : <ForgotPassword />} />
         <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
         <Route path="/forgot-password" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
         <Route path="/" element={<Home />} />
