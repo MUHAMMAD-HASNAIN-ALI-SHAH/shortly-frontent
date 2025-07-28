@@ -3,10 +3,16 @@ import useLinkStore from "../../store/useLinkStore";
 import useLoadingStore from "../../store/useLoadingStore";
 import useFormStore from "../../store/useFormStore";
 import useNavigationStore from "../../store/useNavigationStore";
+import { useState } from "react";
 
 const QrCode = () => {
-  const { links, handleQrSubmit } = useLinkStore();
-  const getQrCodes = links.filter((link: any) => link.type === "qr-code");
+  const [searchText, setSearchText] = useState("");
+  const { links, handleQrSubmit, qrLimit } = useLinkStore();
+  const getQrCodes = links
+    .filter((link: any) => link.type === "qr-code")
+    .filter((link: any) =>
+      link.title.toLowerCase().includes(searchText.toLowerCase())
+    );
   const { fetchLinksLoader } = useLoadingStore();
   const { qrNavigation, setQrNavigation } = useNavigationStore();
   const { handleQrInputChange, qrInputs } = useFormStore();
@@ -35,6 +41,8 @@ const QrCode = () => {
           <div className="mt-5">
             <input
               type="text"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
               placeholder="Search shortly QR codes"
               className="w-64 px-4 py-2 border border-blue-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
@@ -123,7 +131,7 @@ const QrCode = () => {
                 Fill in the details to generate a new QR code.
               </p>
               <p className="text-sm text-blue-600 font-medium">
-                You have <span className="font-bold">5</span> more QR codes
+                You have <span className="font-bold">{qrLimit}</span> more QR codes
                 available.
               </p>
             </div>
@@ -163,7 +171,7 @@ const QrCode = () => {
             </div>
 
             <p className="text-sm text-blue-600 mb-6 font-medium">
-              You have <span className="font-bold">20</span> more qr codes
+              You have <span className="font-bold">{qrLimit}</span> more qr codes
               available.
             </p>
 

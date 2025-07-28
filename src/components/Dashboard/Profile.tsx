@@ -1,10 +1,9 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import useAuthStore from "../../store/useAuthStore";
 import { toast } from "react-toastify";
 
 const Profile = () => {
   const { user, changePassword } = useAuthStore();
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [formData, setFormData] = useState({
     password: "",

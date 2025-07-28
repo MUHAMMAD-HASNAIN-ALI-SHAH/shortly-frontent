@@ -3,13 +3,20 @@ import useLinkStore from "../../store/useLinkStore";
 import useLoadingStore from "../../store/useLoadingStore";
 import useNavigationStore from "../../store/useNavigationStore";
 import useFormStore from "../../store/useFormStore";
+import { useState } from "react";
 
 const Link = () => {
-  const { links, handleUrlSubmit } = useLinkStore();
+  const { links, handleUrlSubmit, urlLimit } = useLinkStore();
   const { urlsNavigation, setUrlsNavigation } = useNavigationStore();
   const { fetchLinksLoader, urlButtonLoading } = useLoadingStore();
   const { handleUrlsInputChange, urlsInputs } = useFormStore();
-  const getLinks = links.filter((link: any) => link.type === "short-url");
+  const [searchText, setSearchText] = useState("");
+  const getLinks = links
+    .filter((link: any) => link.type === "short-url")
+    .filter((link: any) =>
+      link.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+
   return (
     <div className="w-full h-full bg-gray-100 p-4">
       {urlsNavigation === "link" ? (
@@ -33,8 +40,11 @@ const Link = () => {
             <input
               type="text"
               placeholder="Search shortly links"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
               className="w-64 px-4 py-2 border border-blue-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
+
             <button className="cursor-pointer ml-2 bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition">
               Search
             </button>
@@ -112,7 +122,7 @@ const Link = () => {
                 Fill in the details to create a new short link.
               </p>
               <p className="text-sm text-blue-600 font-medium">
-                You have <span className="font-bold">20</span> more links to
+                You have <span className="font-bold">{urlLimit}</span> more links to
                 create.
               </p>
             </div>
@@ -151,24 +161,8 @@ const Link = () => {
               />
             </div>
 
-            <div className="flex justify-between items-center mb-4">
-              <p className="text-sm font-medium text-gray-700">
-                Also want to create the QR code?
-              </p>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  id="qrCode"
-                  className="sr-only peer"
-                  onClick={() => {}}
-                />
-                <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-400 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-300"></div>
-                <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"></div>
-              </label>
-            </div>
-
             <p className="text-sm text-blue-600 mb-6 font-medium">
-              You have <span className="font-bold">5</span> more QR codes
+              You have <span className="font-bold">{urlLimit}</span> more QR codes
               available.
             </p>
 

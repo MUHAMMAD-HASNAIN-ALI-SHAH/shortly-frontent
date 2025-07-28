@@ -109,13 +109,14 @@ const useLinkStore = create<LinkState>((set, get) => ({
   handleQrSubmit: async () => {
     try {
       const { qrInputs } = useFormStore.getState();
-      if (!qrInputs.url) {
-        toast.error("Please enter a valid URL");
+      if (!qrInputs.url || !qrInputs.title) {
+        toast.error("Please enter a valid URL and title");
         return;
       }
       useLoadingStore.getState().setQrCreateButtonLoading(true);
       const res = await axiosInstance.post("/api/v2/link/qr", {
         originalUrl: qrInputs.url,
+        title: qrInputs.title,
       });
       set({ previewLink: res.data.result });
       set({ links: [res.data.result, ...get().links] });
