@@ -1,4 +1,4 @@
-import {Loader2, QrCode as QrIcon, X } from "lucide-react";
+import { Loader2, QrCode as QrIcon, X, Download } from "lucide-react";
 import useLinkStore from "../../store/useLinkStore";
 import useLoadingStore from "../../store/useLoadingStore";
 import useFormStore from "../../store/useFormStore";
@@ -17,6 +17,23 @@ const QrCode = () => {
   const { qrNavigation, setQrNavigation } = useNavigationStore();
   const { handleQrInputChange, qrInputs } = useFormStore();
   const { qrButtonLoading } = useLoadingStore();
+
+  const handleDownload = async (url: string, filename = "qr-code.png") => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Error downloading QR code:", error);
+    }
+  };
 
   return (
     <div className="w-full h-full bg-gray-100 p-4">
@@ -81,6 +98,17 @@ const QrCode = () => {
                         <h2 className="text-lg text-gray-700">
                           {qr.originalUrl || "No original URL"}
                         </h2>
+
+                        {/* Download Button */}
+                        <button
+                          onClick={() =>
+                            handleDownload(qr.qrCodeLink, `${qr.title || "qr-code"}.png`)
+                          }
+                          className="mt-3 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
+                        >
+                          <Download className="w-4 h-4" />
+                          Download
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -171,7 +199,13 @@ const QrCode = () => {
                     : "bg-blue-600 hover:bg-blue-700"
                 } text-white py-2 rounded-lg font-semibold transition duration-200`}
               >
-                Generate QR Code
+                {qrButtonLoading ? (
+                  <span className="flex justify-center items-center gap-2">
+                    <Loader2 className="animate-spin w-4 h-4" /> Generating...
+                  </span>
+                ) : (
+                  "Generate QR Code"
+                )}
               </button>
             </div>
           </form>

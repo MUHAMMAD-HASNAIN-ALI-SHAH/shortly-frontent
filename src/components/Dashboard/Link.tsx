@@ -1,4 +1,4 @@
-import { Link2, Loader2, X } from "lucide-react";
+import { Copy, Link2, Loader2, X } from "lucide-react";
 import useLinkStore from "../../store/useLinkStore";
 import useLoadingStore from "../../store/useLoadingStore";
 import useNavigationStore from "../../store/useNavigationStore";
@@ -69,16 +69,33 @@ const Link = () => {
                         <img src="./web.png" alt="Web Icon" />
                         <div className="flex flex-col">
                           <h1 className="text-lg font-bold">{link.title}</h1>
-                            <a
+                          <a
                             href={link.shortUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-md font-semibold text-blue-500 hover:underline"
-                            >
+                          >
                             {link.shortUrl}
-                            </a>
+                          </a>
                           <h2 className="text-lg">{link.originalUrl}</h2>
                         </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={async () => {
+                            try {
+                              await navigator.clipboard.writeText(
+                                link.shortUrl
+                              );
+                            } catch (err) {
+                              // Optionally handle error
+                            }
+                          }}
+                          className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition"
+                        >
+                          <Copy className="size-4" />
+                          Copy
+                        </button>
                       </div>
                     </div>
                   );
@@ -117,8 +134,8 @@ const Link = () => {
                 Fill in the details to create a new short link.
               </p>
               <p className="text-sm text-blue-600 font-medium">
-                You have <span className="font-bold">{urlLimit}</span> more links to
-                create.
+                You have <span className="font-bold">{urlLimit}</span> more
+                links to create.
               </p>
             </div>
 
@@ -157,8 +174,8 @@ const Link = () => {
             </div>
 
             <p className="text-sm text-blue-600 mb-6 font-medium">
-              You have <span className="font-bold">{urlLimit}</span> more QR codes
-              available.
+              You have <span className="font-bold">{urlLimit}</span> more QR
+              codes available.
             </p>
 
             <div>
