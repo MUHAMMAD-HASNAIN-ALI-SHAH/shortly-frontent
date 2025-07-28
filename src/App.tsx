@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Link from "./pages/Link";
 
 function App() {
   const { verify, isAuthenticated } = useAuthStore();
@@ -25,6 +26,7 @@ function App() {
         <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
         <Route path="/forgot-password" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
         <Route path="/" element={<Home />} />
+        <Route path="/s/:id" element={<Link />} />
       </Routes>
     </div>
   );

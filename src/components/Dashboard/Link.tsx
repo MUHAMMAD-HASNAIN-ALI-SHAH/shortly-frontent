@@ -69,9 +69,14 @@ const Link = () => {
                         <img src="./web.png" alt="Web Icon" />
                         <div className="flex flex-col">
                           <h1 className="text-lg font-bold">{link.title}</h1>
-                          <h3 className="text-md font-semibold text-blue-500">
+                            <a
+                            href={link.shortUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-md font-semibold text-blue-500 hover:underline"
+                            >
                             {link.shortUrl}
-                          </h3>
+                            </a>
                           <h2 className="text-lg">{link.originalUrl}</h2>
                         </div>
                       </div>
