@@ -1,4 +1,4 @@
-import { Copy, Delete, Edit, Loader2, QrCode as QrIcon, X } from "lucide-react";
+import {Loader2, QrCode as QrIcon, X } from "lucide-react";
 import useLinkStore from "../../store/useLinkStore";
 import useLoadingStore from "../../store/useLoadingStore";
 import useFormStore from "../../store/useFormStore";
@@ -82,20 +82,6 @@ const QrCode = () => {
                           {qr.originalUrl || "No original URL"}
                         </h2>
                       </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition">
-                        <Copy className="size-4" />
-                        Copy
-                      </button>
-                      <button className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition">
-                        <Edit className="size-4" />
-                        Edit
-                      </button>
-                      <button className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition">
-                        <Delete className="size-4" />
-                        Delete
-                      </button>
                     </div>
                   </div>
                 ))}

@@ -1,4 +1,4 @@
-import { Copy, Delete, Link2, Loader2, X } from "lucide-react";
+import { Link2, Loader2, X } from "lucide-react";
 import useLinkStore from "../../store/useLinkStore";
 import useLoadingStore from "../../store/useLoadingStore";
 import useNavigationStore from "../../store/useNavigationStore";
@@ -79,16 +79,6 @@ const Link = () => {
                             </a>
                           <h2 className="text-lg">{link.originalUrl}</h2>
                         </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <button className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition">
-                          <Copy className="size-4" />
-                          Copy
-                        </button>
-                        <button className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition">
-                          <Delete className="size-4" />
-                          Delete
-                        </button>
                       </div>
                     </div>
                   );

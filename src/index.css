@@ -1,6 +1,33 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e0f2fe; /* sky-100 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #38bdf8; /* sky-400 */
+  border-radius: 9999px;
+  border: 2px solid #e0f2fe; /* creates spacing around the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #0ea5e9; /* sky-500 */
+}
+
+/* Firefox scrollbar (optional) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #38bdf8 #e0f2fe;
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
