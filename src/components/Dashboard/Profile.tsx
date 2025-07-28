@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 const Profile = () => {
   const { user, changePassword } = useAuthStore();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [profilePic, setProfilePic] = useState(user?.picture);
 
   const [formData, setFormData] = useState({
     password: "",
@@ -39,44 +38,13 @@ const Profile = () => {
     });
   };
 
-  const handleImageClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64 = reader.result as string;
-      setProfilePic(base64);
-
-      // You can now send this base64 to your backend
-      console.log("Base64 Image:", base64);
-    };
-    reader.readAsDataURL(file);
-  };
-
   return (
     <div className="w-full min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-md rounded-2xl p-6 space-y-8">
         <div className="flex flex-col items-center text-center space-y-3">
-          <img
-            src={profilePic}
-            alt="Profile"
-            onClick={handleImageClick}
-            className="w-24 h-24 rounded-full object-cover border-2 border-gray-300 cursor-pointer hover:opacity-80"
-          />
-          <input
-            type="file"
-            ref={fileInputRef}
-            className="hidden"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
+          <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-4xl font-bold text-gray-600">
+            <h1>{user?.username?.charAt(0) ?? "U"}</h1>
+          </div>
           <div>
             <h2 className="text-xl font-semibold">{user?.username}</h2>
             <p className="text-black text-sm">{user?.email}</p>

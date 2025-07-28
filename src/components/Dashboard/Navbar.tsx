@@ -8,7 +8,7 @@ const Navbar = () => {
     <div className="w-full shadow-md bg-white h-16 z-50">
       <nav className="w-full flex items-center justify-between px-4 py-5">
         <div className="flex items-center space-x-2">
-          <SidebarTrigger className="cursor-pointer" ></SidebarTrigger>
+          <SidebarTrigger className="cursor-pointer"></SidebarTrigger>
           <h1 className="font-bold text-xl cursor-pointer">Shortly</h1>
         </div>
         <Popover>
@@ -22,20 +22,16 @@ const Navbar = () => {
                     : user.username
                   : ""}
               </h1>
-              <img
-                src={user?.picture}
-                alt="Profile"
-                className="w-8 h-8 rounded-full"
-              />
+              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-4xl font-bold text-gray-600">
+                <p className="text-sm">{user?.username?.charAt(0) ?? "U"}</p>
+              </div>
             </div>
           </PopoverTrigger>
           <PopoverContent className="rounded-lg shadow-lg p-4 mr-2">
             <div className="flex items-center space-x-4">
-              <img
-                src={user?.picture}
-                alt="Profile"
-                className="w-12 h-12 rounded-full object-cover"
-              />
+              <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-4xl font-bold text-gray-600">
+                <p className="text-sm">{user?.username?.charAt(0) ?? "U"}</p>
+              </div>
               <div>
                 <h2 className="text-base font-semibold text-gray-800">
                   {user?.username
