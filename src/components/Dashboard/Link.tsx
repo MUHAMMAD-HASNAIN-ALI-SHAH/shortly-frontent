@@ -21,7 +21,7 @@ const Link = () => {
     <div className="w-full h-full bg-gray-100 p-4">
       {urlsNavigation === "link" ? (
         <div>
-          <div className="flex items-start justify-between mb-4">
+          <div className="w-full flex flex-col sm:flex-row items-start justify-between mb-4">
             <div>
               <h2 className="text-xl font-semibold">Shortly Links</h2>
               <p className="text-gray-600">
@@ -36,16 +36,16 @@ const Link = () => {
               Create Link
             </button>
           </div>
-          <div className="mt-5 flex">
+          <div className="mt-5 flex flex-col sm:flex-row items-center gap-2">
             <input
               type="text"
               placeholder="Search shortly links"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="w-64 px-4 py-2 border border-blue-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full sm:w-64 px-4 py-2 border border-blue-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
             />
 
-            <button className="cursor-pointer ml-2 bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition">
+            <button className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition">
               Search
             </button>
           </div>
