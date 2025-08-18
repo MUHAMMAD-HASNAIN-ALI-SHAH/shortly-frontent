@@ -31,7 +31,7 @@ const Home = () => {
         {/* Toggle Buttons */}
         <header className="flex flex-col md:flex-row gap-3 items-start md:items-center justify-between mb-1">
           <h1 className="text-2xl font-bold">Quick Create</h1>
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-col sm:flex-row items-center space-x-4">
             <button
               onClick={() => setQuickCreate("link")}
               className={`flex items-center px-4 py-2 rounded-full cursor-pointer text-nowrap ${
