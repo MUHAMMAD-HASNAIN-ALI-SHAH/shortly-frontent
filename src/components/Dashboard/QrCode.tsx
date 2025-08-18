@@ -80,27 +80,30 @@ const QrCode = () => {
                 {getQrCodes.map((qr: any) => (
                   <div
                     key={qr._id}
-                    className="flex flex-col gap-5 lg:flex-row items-start justify-between mb-4 bg-white p-4 rounded-lg shadow-sm"
+                    className="flex flex-col lg:flex-row items-center justify-between mb-4 bg-white p-4 rounded-lg shadow-sm gap-4"
                   >
-                    <div className="flex items-center space-x-4">
+                    {/* Left Section */}
+                    <div className="flex items-center gap-4 w-full lg:w-auto">
                       <img
                         src={qr.qrCodeLink}
                         alt="QR"
                         className="h-36 w-36 object-contain border p-2 rounded-md"
                       />
                       <div className="flex flex-col">
-                        <h1 className="text-lg font-bold">
+                        <h1 className="text-lg font-bold text-gray-800">
                           {qr.title || "Untitled"}
                         </h1>
-                        <h3 className="text-md font-semibold text-blue-500">
+                        <h3 className="text-md font-semibold text-blue-500 break-all">
                           {qr.shortUrl || "No short link"}
                         </h3>
-                        <h2 className="text-lg text-gray-700">
+                        <p className="text-sm text-gray-600 break-all">
                           {qr.originalUrl || "No original URL"}
-                        </h2>
+                        </p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
+
+                    {/* Right Section */}
+                    <div className="flex-shrink-0">
                       <button
                         onClick={() =>
                           handleDownload(
@@ -108,9 +111,9 @@ const QrCode = () => {
                             `${qr.title || "qr-code"}.png`
                           )
                         }
-                        className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition"
+                        className="flex items-center gap-2 px-4 py-2 border border-blue-300 text-blue-600 rounded hover:bg-blue-50 transition"
                       >
-                        <Download className="size-4" />
+                        <Download className="w-4 h-4" />
                         Download
                       </button>
                     </div>

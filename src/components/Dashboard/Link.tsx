@@ -36,7 +36,7 @@ const Link = () => {
               Create Link
             </button>
           </div>
-          <div className="mt-5">
+          <div className="mt-5 flex">
             <input
               type="text"
               placeholder="Search shortly links"
@@ -63,24 +63,35 @@ const Link = () => {
                   return (
                     <div
                       key={link._id}
-                      className="flex flex-col gap-5 lg:flex-row items-start justify-between mb-4 bg-white p-4 rounded-lg shadow-sm"
+                      className="flex flex-col lg:flex-row items-center justify-between mb-4 bg-white p-4 rounded-lg shadow-sm gap-4"
                     >
-                      <div className="flex items-center space-x-2">
-                        <img src="./web.png" alt="Web Icon" />
+                      {/* Left Section */}
+                      <div className="flex items-center gap-3 w-full lg:w-auto">
+                        <img
+                          src="./web.png"
+                          alt="Web Icon"
+                          className="w-12 h-12 object-contain"
+                        />
                         <div className="flex flex-col">
-                          <h1 className="text-lg font-bold">{link.title}</h1>
+                          <h1 className="text-lg font-bold text-gray-800">
+                            {link.title}
+                          </h1>
                           <a
                             href={link.shortUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-md font-semibold text-blue-500 hover:underline"
+                            className="text-md font-semibold text-blue-500 hover:underline break-all"
                           >
                             {link.shortUrl}
                           </a>
-                          <h2 className="text-lg">{link.originalUrl}</h2>
+                          <p className="text-sm text-gray-600 break-all">
+                            {link.originalUrl}
+                          </p>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
+
+                      {/* Right Section */}
+                      <div className="flex-shrink-0">
                         <button
                           onClick={async () => {
                             try {
@@ -88,12 +99,12 @@ const Link = () => {
                                 link.shortUrl
                               );
                             } catch (err) {
-                              // Optionally handle error
+                              console.error("Failed to copy:", err);
                             }
                           }}
-                          className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition"
+                          className="flex items-center gap-2 px-4 py-2 border border-blue-300 text-blue-600 rounded hover:bg-blue-50 transition"
                         >
-                          <Copy className="size-4" />
+                          <Copy className="w-4 h-4" />
                           Copy
                         </button>
                       </div>

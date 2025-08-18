@@ -24,7 +24,7 @@ const Dashboard = () => {
         <AppSidebar />
         <div className="w-full">
           <Navbar />
-          <div className="w-full h-[calc(100vh-64px)] overflow-y-auto p-4">
+          <div className="w-full h-[calc(100vh-64px)] overflow-y-auto p-4 overflow-x-hidden">
             {sidebarMenu === "Home" && <Home />}
             {sidebarMenu === "Urls" && <Link />}
             {sidebarMenu === "QR Codes" && <QrCode />}
