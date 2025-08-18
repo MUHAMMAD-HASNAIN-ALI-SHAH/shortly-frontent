@@ -98,18 +98,21 @@ const QrCode = () => {
                         <h2 className="text-lg text-gray-700">
                           {qr.originalUrl || "No original URL"}
                         </h2>
-
-                        {/* Download Button */}
-                        <button
-                          onClick={() =>
-                            handleDownload(qr.qrCodeLink, `${qr.title || "qr-code"}.png`)
-                          }
-                          className="mt-3 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
-                        >
-                          <Download className="w-4 h-4" />
-                          Download
-                        </button>
                       </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() =>
+                          handleDownload(
+                            qr.qrCodeLink,
+                            `${qr.title || "qr-code"}.png`
+                          )
+                        }
+                        className="cursor-pointer border border-blue-200 flex items-center gap-3 text-black px-4 py-2 rounded-sm transition"
+                      >
+                        <Download className="size-4" />
+                        Download
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -145,8 +148,8 @@ const QrCode = () => {
                 Fill in the details to generate a new QR code.
               </p>
               <p className="text-sm text-blue-600 font-medium">
-                You have <span className="font-bold">{qrLimit}</span> more QR codes
-                available.
+                You have <span className="font-bold">{qrLimit}</span> more QR
+                codes available.
               </p>
             </div>
 
@@ -185,8 +188,8 @@ const QrCode = () => {
             </div>
 
             <p className="text-sm text-blue-600 mb-6 font-medium">
-              You have <span className="font-bold">{qrLimit}</span> more qr codes
-              available.
+              You have <span className="font-bold">{qrLimit}</span> more qr
+              codes available.
             </p>
 
             <div>
