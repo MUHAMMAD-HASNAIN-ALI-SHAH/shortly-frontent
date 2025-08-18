@@ -5,7 +5,8 @@ import useFormStore from "../../store/useFormStore";
 import useLoadingStore from "../../store/useLoadingStore";
 
 const Home = () => {
-  const { urlLimit, qrLimit, previewLink, handleQuickCreateSubmit } = useLinkStore();
+  const { urlLimit, qrLimit, previewLink, handleQuickCreateSubmit } =
+    useLinkStore();
   const { quickCreateInput, handlequickCreateInput } = useFormStore();
   const { quickCreate, setQuickCreate } = useNavigationStore();
   const { quickCreateButtonLoading } = useLoadingStore();
@@ -31,7 +32,7 @@ const Home = () => {
         {/* Toggle Buttons */}
         <header className="flex flex-col md:flex-row gap-3 items-start md:items-center justify-between mb-1">
           <h1 className="text-2xl font-bold">Quick Create</h1>
-          <div className="flex flex-col sm:flex-row items-center space-x-4">
+          <div className="flex flex-col gap-5 sm:flex-row items-center space-x-7 sm:space-x-4">
             <button
               onClick={() => setQuickCreate("link")}
               className={`flex items-center px-4 py-2 rounded-full cursor-pointer text-nowrap ${
@@ -78,7 +79,7 @@ const Home = () => {
                 disabled={quickCreateButtonLoading}
               />
               <button
-              onClick={handleQuickCreateSubmit}
+                onClick={handleQuickCreateSubmit}
                 className="bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition whitespace-nowrap flex items-center justify-center min-w-[170px]"
                 disabled={quickCreateButtonLoading}
               >
