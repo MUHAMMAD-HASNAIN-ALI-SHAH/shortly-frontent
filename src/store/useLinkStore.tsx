@@ -12,6 +12,7 @@ interface Link {
   shortUrl?: string;
   qrCodeLink?: string;
   type: "qr-code" | "short-url";
+  clicks: number;
   createdAt: string;
 }
 
@@ -84,7 +85,7 @@ const useLinkStore = create<LinkState>((set, get) => ({
   handleUrlSubmit: async () => {
     try {
       const { urlsInputs } = useFormStore.getState();
-      if (!urlsInputs.title || !urlsInputs.url) {
+      if (!urlsInputs.title || !urlsInputs.url || !urlsInputs.password) {
         toast.error("Please fill in all fields");
         return;
       }
@@ -92,6 +93,7 @@ const useLinkStore = create<LinkState>((set, get) => ({
       const res = await axiosInstance.post("/api/v2/link/short", {
         originalUrl: urlsInputs.url,
         title: urlsInputs.title,
+        password: urlsInputs.password || undefined,
       });
       set({ previewLink: res.data.result });
       set({ links: [res.data.result, ...get().links] });

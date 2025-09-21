@@ -102,7 +102,7 @@ const Home = () => {
       {/* Preview Section */}
       {previewLink && previewLink.type === "short-url" && (
         <div className="flex flex-col gap-5 lg:flex-row items-start justify-between mb-4 bg-white p-4 rounded-lg shadow-sm mt-5">
-          <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-between items-center space-x-2">
+          <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-start items-center space-x-2">
             <img src="./web.png" alt="Web Icon" />
             <div className="flex flex-col">
               <h1 className="text-lg font-bold">{previewLink.title}</h1>
@@ -117,11 +117,11 @@ const Home = () => {
 
       {previewLink && previewLink.type === "qr-code" && (
         <div className="flex flex-col gap-5 lg:flex-row items-start justify-between mb-4 bg-white p-4 rounded-lg shadow-sm mt-5">
-          <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-between items-center space-x-2">
+          <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-start items-center space-x-2">
             <img src={previewLink.qrCodeLink} className="h-36" alt="QR Code" />
             <div className="flex flex-col">
               <h1 className="text-lg font-bold">{previewLink.title}</h1>
-              <h2 className="text-lg font-semibold">
+              <h2 className="text-lg font-semibold text-blue-500 cursor-not-allowed">
                 {previewLink.originalUrl}
               </h2>
             </div>

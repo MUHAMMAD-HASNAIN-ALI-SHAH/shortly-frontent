@@ -5,6 +5,7 @@ interface FormState {
   urlsInputs: {
     title: string;
     url: string;
+    password: string;
   };
   qrInputs: {
     title: string;
@@ -22,6 +23,7 @@ const useFormStore = create<FormState>((set) => ({
   urlsInputs: {
     title: "",
     url: "",
+    password: "",
   },
   qrInputs: {
     title: "",
@@ -41,6 +43,7 @@ const useFormStore = create<FormState>((set) => ({
       urlsInputs: {
         title: "",
         url: "",
+        password: "",
       },
     }),
   handleQrInputChange: (field: string, value: string) => {
