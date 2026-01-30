@@ -3,10 +3,12 @@ import useLinkStore from "../../store/useLinkStore";
 import useNavigationStore from "../../store/useNavigationStore";
 import useFormStore from "../../store/useFormStore";
 import useLoadingStore from "../../store/useLoadingStore";
+import useLimitStore from "../../store/useLimitStore";
 
 const Home = () => {
-  const { urlLimit, qrLimit, previewLink, handleQuickCreateSubmit } =
+  const { previewLink, handleQuickCreateSubmit } =
     useLinkStore();
+    const { urlLimit, qrLimit,} = useLimitStore();
   const { quickCreateInput, handlequickCreateInput } = useFormStore();
   const { quickCreate, setQuickCreate } = useNavigationStore();
   const { quickCreateButtonLoading } = useLoadingStore();

@@ -4,9 +4,11 @@ import useLoadingStore from "../../store/useLoadingStore";
 import useNavigationStore from "../../store/useNavigationStore";
 import useFormStore from "../../store/useFormStore";
 import { useState } from "react";
+import useLimitStore from "../../store/useLimitStore";
 
 const Link = () => {
-  const { links, handleUrlSubmit, urlLimit } = useLinkStore();
+  const { links, handleUrlSubmit } = useLinkStore();
+  const { urlLimit } = useLimitStore();
   const { urlsNavigation, setUrlsNavigation } = useNavigationStore();
   const { fetchLinksLoader, urlButtonLoading } = useLoadingStore();
   const { handleUrlsInputChange, urlsInputs } = useFormStore();
@@ -204,9 +206,8 @@ const Link = () => {
               <button
                 type="button"
                 onClick={() => setUsePassword(true)}
-                className={`px-4 py-2 rounded ${
-                  usePassword ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
+                className={`px-4 py-2 rounded ${usePassword ? "bg-blue-600 text-white" : "bg-gray-200"
+                  }`}
               >
                 Yes
               </button>
@@ -216,9 +217,8 @@ const Link = () => {
                   setUsePassword(false);
                   handleUrlsInputChange("password", "");
                 }}
-                className={`px-4 py-2 rounded ${
-                  !usePassword ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
+                className={`px-4 py-2 rounded ${!usePassword ? "bg-blue-600 text-white" : "bg-gray-200"
+                  }`}
               >
                 No
               </button>
@@ -254,11 +254,10 @@ const Link = () => {
             <div>
               <button
                 type="submit"
-                className={`w-full ${
-                  urlButtonLoading
+                className={`w-full ${urlButtonLoading
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-blue-600 hover:bg-blue-700"
-                } text-white py-2 rounded-lg font-semibold transition duration-200`}
+                  } text-white py-2 rounded-lg font-semibold transition duration-200`}
                 disabled={urlButtonLoading}
               >
                 Add Link

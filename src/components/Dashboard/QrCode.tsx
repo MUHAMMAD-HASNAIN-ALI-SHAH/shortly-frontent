@@ -4,10 +4,12 @@ import useLoadingStore from "../../store/useLoadingStore";
 import useFormStore from "../../store/useFormStore";
 import useNavigationStore from "../../store/useNavigationStore";
 import { useState } from "react";
+import useLimitStore from "../../store/useLimitStore";
 
 const QrCode = () => {
   const [searchText, setSearchText] = useState("");
-  const { links, handleQrSubmit, qrLimit } = useLinkStore();
+  const { links, handleQrSubmit } = useLinkStore();
+  const { qrLimit, } = useLimitStore();
   const getQrCodes = links
     .filter((link: any) => link.type === "qr-code")
     .filter((link: any) =>
@@ -56,18 +58,18 @@ const QrCode = () => {
           </div>
 
           <div className="mt-5 flex flex-col sm:flex-row items-center gap-2">
-  <input
-    type="text"
-    value={searchText}
-    onChange={(e) => setSearchText(e.target.value)}
-    placeholder="Search shortly QR codes"
-    className="w-full sm:w-64 px-4 py-2 border border-blue-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
-  />
+            <input
+              type="text"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search shortly QR codes"
+              className="w-full sm:w-64 px-4 py-2 border border-blue-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+            />
 
-  <button className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition">
-    Search
-  </button>
-</div>
+            <button className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition">
+              Search
+            </button>
+          </div>
 
 
           <hr className="my-5 border-t border-blue-200" />
@@ -201,11 +203,10 @@ const QrCode = () => {
               <button
                 type="submit"
                 disabled={qrButtonLoading}
-                className={`w-full ${
-                  qrButtonLoading
+                className={`w-full ${qrButtonLoading
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-blue-600 hover:bg-blue-700"
-                } text-white py-2 rounded-lg font-semibold transition duration-200`}
+                  } text-white py-2 rounded-lg font-semibold transition duration-200`}
               >
                 {qrButtonLoading ? (
                   <span className="flex justify-center items-center gap-2">

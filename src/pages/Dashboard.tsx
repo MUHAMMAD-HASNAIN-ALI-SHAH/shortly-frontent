@@ -8,9 +8,11 @@ import Link from "../components/Dashboard/Link";
 import QrCode from "../components/Dashboard/QrCode";
 import useLinkStore from "../store/useLinkStore";
 import useNavigationStore from "../store/useNavigationStore";
+import useLimitStore from "../store/useLimitStore";
 
 const Dashboard = () => {
-  const { getLimit, fetchLinks } = useLinkStore();
+  const { fetchLinks } = useLinkStore();
+  const { getLimit } = useLimitStore();
   const { sidebarMenu } = useNavigationStore();
 
   useEffect(() => {

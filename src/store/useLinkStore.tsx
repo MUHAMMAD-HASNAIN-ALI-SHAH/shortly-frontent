@@ -19,21 +19,16 @@ interface Link {
 interface LinkState {
   links: Link[];
   previewLink: Link | null;
-  urlLimit: number;
-  qrLimit: number;
   handleQuickCreateSubmit: () => void;
   handleUrlSubmit: () => void;
   handleQrSubmit: () => void;
   fetchLinks: () => void;
   updateTitle: (id: string, title: string) => void;
   deleteLink: (id: string) => Promise<number>;
-  getLimit: () => void;
 }
 
 const useLinkStore = create<LinkState>((set, get) => ({
   links: [],
-  urlLimit: 0,
-  qrLimit: 0,
   previewLink: null,
 
   // ➕ Create Short URL and QR Code
@@ -173,16 +168,6 @@ const useLinkStore = create<LinkState>((set, get) => ({
     } catch (err: any) {
       toast.error(err?.response?.data?.msg || "Failed to delete link");
       return 0;
-    }
-  },
-
-  // 🔢 Get URL and QR code limit
-  getLimit: async () => {
-    try {
-      const res = await axiosInstance.get("/api/v2/link/limit");
-      set({ urlLimit: res.data.urls, qrLimit: res.data.qrCodes });
-    } catch (err: any) {
-      toast.error(err?.response?.data?.msg || "Failed to get limits");
     }
   },
 }));
