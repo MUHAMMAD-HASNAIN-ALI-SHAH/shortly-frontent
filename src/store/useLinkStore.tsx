@@ -117,7 +117,7 @@ const useLinkStore = create<LinkState>((set, get) => ({
       });
       set({ previewLink: res.data.result });
       set({ links: [res.data.result, ...get().links] });
-      useNavigationStore.getState().setQrNavigation("qr");
+      useNavigationStore.getState().setQrCodeNavigation("qr");
       useFormStore.getState().resetQrInputs();
       useLoadingStore.getState().setQrCreateButtonLoading(false);
       toast.success("QR Code generated successfully");

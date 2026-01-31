@@ -3,23 +3,23 @@ import { create } from "zustand";
 interface NavigationState {
   sidebarMenu: string;
   quickCreate: string;
-  urlsNavigation: string;
-  qrNavigation: string;
+  shortUrlNavigation: string;
+  qrCodeNavigation: string;
   setSidebarMenu: (menu: string) => void;
   setQuickCreate: (menu: string) => void;
-  setUrlsNavigation: (menu: string) => void;
-  setQrNavigation: (menu: string) => void;
+  setShortUrlNavigation: (menu: string) => void;
+  setQrCodeNavigation: (menu: string) => void;
 }
 
 const useNavigationStore = create<NavigationState>((set) => ({
   sidebarMenu: "Home",
-  quickCreate: "link",
-  urlsNavigation: "link",
-  qrNavigation: "qr",
+  quickCreate: "short-url",
+  shortUrlNavigation: "short-url",
+  qrCodeNavigation: "qr-code",
   setSidebarMenu: (menu: string) => set({ sidebarMenu: menu }),
   setQuickCreate: (menu: string) => set({ quickCreate: menu }),
-  setUrlsNavigation: (menu: string) => set({ urlsNavigation: menu }),
-  setQrNavigation: (menu: string) => set({ qrNavigation: menu }),
+  setShortUrlNavigation: (menu: string) => set({ shortUrlNavigation: menu }),
+  setQrCodeNavigation: (menu: string) => set({ qrCodeNavigation: menu }),
 }));
 
 export default useNavigationStore;

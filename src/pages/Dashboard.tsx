@@ -4,7 +4,7 @@ import { AppSidebar } from "../components/Dashboard/sidebar/AppSidebar";
 import { SidebarProvider } from "../components/ui/sidebar";
 import Profile from "../components/Dashboard/Profile";
 import Home from "../components/Dashboard/Home";
-import Link from "../components/Dashboard/Link";
+import Link from "../components/Dashboard/ShortUrl";
 import QrCode from "../components/Dashboard/QrCode";
 import useLinkStore from "../store/useLinkStore";
 import useNavigationStore from "../store/useNavigationStore";

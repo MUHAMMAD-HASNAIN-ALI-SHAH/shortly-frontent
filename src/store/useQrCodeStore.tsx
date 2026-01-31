@@ -33,26 +33,26 @@ const useQrCodeStore = create<QrCodeStoreInterface>((set, get) => ({
     },
     createQrCode: async () => {
         try {
-            const { qrInputs } = useFormStore.getState();
-            if (!qrInputs.url || !qrInputs.title) {
+            const { qrCodeInputs } = useFormStore.getState();
+            if (!qrCodeInputs.url || !qrCodeInputs.title) {
                 toast.error("Please enter a valid URL and title");
                 return;
             }
-            useLoadingStore.getState().setQrCreateButtonLoading(true);
+            useLoadingStore.getState().setQrCodeButtonLoading(true);
             const res = await axiosInstance.post("/api/v3/qr-code", {
-                originalUrl: qrInputs.url,
-                title: qrInputs.title,
+                originalUrl: qrCodeInputs.url,
+                title: qrCodeInputs.title,
             });
             set((state) => ({ qrCodes: [res.data.result, ...state.qrCodes] }));
-            useNavigationStore.getState().setQrNavigation("qr");
-            useFormStore.getState().resetQrInputs();
-            useLoadingStore.getState().setQrCreateButtonLoading(false);
+            useNavigationStore.getState().setQrCodeNavigation("qr");
+            useFormStore.getState().resetQrCodeInputs();
+            useLoadingStore.getState().setQrCodeButtonLoading(false);
             toast.success("QR Code generated successfully");
         } catch (err: any) {
             console.error("Error creating QR code:", err);
             toast.error(err?.response?.data?.msg || "Failed to create QR code");
         } finally {
-            useLoadingStore.getState().setQrCreateButtonLoading(false);
+            useLoadingStore.getState().setQrCodeButtonLoading(false);
         }
     },
     getQrCodes: async () => {

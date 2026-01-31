@@ -2,61 +2,61 @@ import { create } from "zustand";
 
 interface FormState {
   quickCreateInput: string;
-  urlsInputs: {
+  shortUrlInputs: {
     title: string;
     url: string;
     password: string;
   };
-  qrInputs: {
+  qrCodeInputs: {
     title: string;
     url: string;
   };
   handlequickCreateInput: (value: string) => void;
-  handleUrlsInputChange: (field: string, value: string) => void;
-  resetUrlsInputs: () => void;
-  handleQrInputChange: (field: string, value: string) => void;
-  resetQrInputs: () => void;
+  handleShortUrlInputChange: (field: string, value: string) => void;
+  resetShortUrlInputs: () => void;
+  handleQrCodeInputChange: (field: string, value: string) => void;
+  resetQrCodeInputs: () => void;
 }
 
 const useFormStore = create<FormState>((set) => ({
   quickCreateInput: "",
-  urlsInputs: {
+  shortUrlInputs: {
     title: "",
     url: "",
     password: "",
   },
-  qrInputs: {
+  qrCodeInputs: {
     title: "",
     url: "",
   },
   handlequickCreateInput: (value: string) => set({ quickCreateInput: value }),
-  handleUrlsInputChange: (field: string, value: string) => {
+  handleShortUrlInputChange: (field: string, value: string) => {
     set((state) => ({
-      urlsInputs: {
-        ...state.urlsInputs,
+      shortUrlInputs: {
+        ...state.shortUrlInputs,
         [field]: value,
       },
     }));
   },
-  resetUrlsInputs: () =>
+  resetShortUrlInputs: () =>
     set({
-      urlsInputs: {
+      shortUrlInputs: {
         title: "",
         url: "",
         password: "",
       },
     }),
-  handleQrInputChange: (field: string, value: string) => {
+  handleQrCodeInputChange: (field: string, value: string) => {
     set((state) => ({
-      qrInputs: {
-        ...state.qrInputs,
+      qrCodeInputs: {
+        ...state.qrCodeInputs,
         [field]: value,
       },
     }));
   },
-  resetQrInputs: () =>
+  resetQrCodeInputs: () =>
     set({
-      qrInputs: {
+      qrCodeInputs: {
         title: "",
         url: "",
       },
