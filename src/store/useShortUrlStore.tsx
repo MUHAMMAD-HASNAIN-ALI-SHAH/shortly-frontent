@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import useNavigationStore from "./useNavigationStore";
 import useFormStore from "./useFormStore";
 import useLoadingStore from "./useLoadingStore";
+import useLimitStore from "./useLimitStore";
 
 interface ShortUrl {
     _id: string;
@@ -35,8 +36,9 @@ const useShortUrlStore = create<ShortUrlStoreInterface>((set, get) => ({
     createShortUrl: async () => {
         try {
             const { shortUrlInputs } = useFormStore.getState();
-            if (!shortUrlInputs.url || !shortUrlInputs.title) {
+            if (!shortUrlInputs.url) {
                 toast.error("Please enter a valid URL and title");
+                console.log("Invalid URL input");
                 return;
             }
             useLoadingStore.getState().setShortUrlButtonLoading(true);
@@ -45,6 +47,8 @@ const useShortUrlStore = create<ShortUrlStoreInterface>((set, get) => ({
                 title: shortUrlInputs.title,
             });
             set((state) => ({ shortUrls: [res.data.result, ...state.shortUrls] }));
+            useLimitStore.getState().reduceLimit("short-url");
+            useNavigationStore.getState().setSidebarMenu("short-url");
             useNavigationStore.getState().setShortUrlNavigation("short-url");
             useFormStore.getState().resetShortUrlInputs();
             useLoadingStore.getState().setShortUrlButtonLoading(false);

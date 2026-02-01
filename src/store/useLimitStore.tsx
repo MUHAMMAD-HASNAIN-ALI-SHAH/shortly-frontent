@@ -3,19 +3,20 @@ import axiosInstance from "../lib/axios";
 import { toast } from "react-toastify";
 
 interface LimitStoreInterface {
-    urlLimit: number;
-    qrLimit: number;
+    shortUrlLimit: number;
+    qrCodeLimit: number;
     limitLoader: boolean;
     getLimitError: {
         message: string;
         status: boolean;
     }
     getLimit: () => void;
+    reduceLimit: (type: "short-url" | "qr-code") => void;
 }
 
 const useLimitStore = create<LimitStoreInterface>((set) => ({
-    urlLimit: 0,
-    qrLimit: 0,
+    shortUrlLimit: 0,
+    qrCodeLimit: 0,
     limitLoader: true,
     getLimitError: {
         message: "",
@@ -25,7 +26,7 @@ const useLimitStore = create<LimitStoreInterface>((set) => ({
         try {
             set({ limitLoader: true });
             const res = await axiosInstance.get("/api/v4/limit");
-            set({ urlLimit: res.data.urls, qrLimit: res.data.qrCodes });
+            set({ shortUrlLimit: res.data.urls, qrCodeLimit: res.data.qrCodes });
         } catch (err: any) {
             toast.error(err?.response?.data?.msg || "Failed to get limits");
             set({
@@ -36,6 +37,13 @@ const useLimitStore = create<LimitStoreInterface>((set) => ({
             });
         } finally {
             set({ limitLoader: false });
+        }
+    },
+    reduceLimit: (type: "short-url" | "qr-code") => {
+        if (type === "short-url") {
+            set((state) => ({ shortUrlLimit: state.shortUrlLimit - 1 }));
+        } else if (type === "qr-code") {
+            set((state) => ({ qrCodeLimit: state.qrCodeLimit - 1 }));
         }
     },
 }));

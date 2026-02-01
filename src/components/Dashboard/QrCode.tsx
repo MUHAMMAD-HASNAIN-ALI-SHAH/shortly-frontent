@@ -178,7 +178,7 @@ const QrCodeCreateForm = () => {
   const { handleQrCodeInputChange, qrCodeInputs } = useFormStore();
   const { qrCodeButtonLoading } = useLoadingStore();
   const { createQrCode } = useQrCodeStore();
-  const { qrLimit } = useLimitStore();
+  const { qrCodeLimit } = useLimitStore();
   const { setQrCodeNavigation } = useNavigationStore();
 
   return (
@@ -203,7 +203,7 @@ const QrCodeCreateForm = () => {
             Fill in the details to generate a new QR code.
           </p>
           <p className="text-sm text-blue-600 font-medium">
-            You have <span className="font-bold">{qrLimit}</span> more QR
+            You have <span className="font-bold">{qrCodeLimit}</span> more QR
             codes available.
           </p>
         </div>
@@ -241,7 +241,7 @@ const QrCodeCreateForm = () => {
         </div>
 
         <p className="text-sm text-blue-600 mb-6 font-medium">
-          You have <span className="font-bold">{qrLimit}</span> more QR
+          You have <span className="font-bold">{qrCodeLimit}</span> more QR
           codes available.
         </p>
 

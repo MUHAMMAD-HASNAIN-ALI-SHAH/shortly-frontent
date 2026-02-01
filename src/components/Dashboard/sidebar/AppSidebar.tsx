@@ -20,9 +20,9 @@ export function AppSidebar() {
         <SidebarGroup>
           <ul className="space-y-2">
             <li
-              onClick={() => setSidebarMenu("Home")}
+              onClick={() => setSidebarMenu("home")}
               className={`px-4 py-2 hover:bg-gray-100 cursor-pointer font-semibold ${
-                sidebarMenu === "Home"
+                sidebarMenu === "home"
                   ? "text-blue-600 pl-3 border-l-4 border-blue-600"
                   : ""
               }`}
@@ -35,9 +35,9 @@ export function AppSidebar() {
               Home
             </li>
             <li
-              onClick={() => setSidebarMenu("Urls")}
+              onClick={() => setSidebarMenu("short-url")}
               className={`px-4 py-2 hover:bg-gray-100 cursor-pointer font-semibold ${
-                sidebarMenu === "Urls"
+                sidebarMenu === "short-url"
                   ? "text-blue-600 pl-3 border-l-4 border-blue-600"
                   : ""
               }`}
@@ -50,31 +50,31 @@ export function AppSidebar() {
               Urls
             </li>
             <li
-              onClick={() => setSidebarMenu("QR Codes")}
+              onClick={() => setSidebarMenu("qr-code")}
               className={`px-4 py-2 hover:bg-gray-100 cursor-pointer font-semibold ${
-                sidebarMenu === "QR Codes"
+                sidebarMenu === "qr-code"
                   ? "text-blue-600 pl-3 border-l-4 border-blue-600"
                   : ""
               }`}
             >
               <ScanLine
                 className={`${
-                  sidebarMenu === "QR Codes" ? "text-blue-600" : "text-gray-600"
+                  sidebarMenu === "qr-code" ? "text-blue-600" : "text-gray-600"
                 } inline-block mr-2`}
               />
               QR Codes
             </li>
             <li
-              onClick={() => setSidebarMenu("Profile")}
+              onClick={() => setSidebarMenu("profile")}
               className={`px-4 py-2 hover:bg-gray-100 cursor-pointer font-semibold ${
-                sidebarMenu === "Profile"
+                sidebarMenu === "profile"
                   ? "text-blue-600 pl-3 border-l-4 border-blue-600"
                   : ""
               }`}
             >
               <User
                 className={`${
-                  sidebarMenu === "Profile" ? "text-blue-600" : "text-gray-600"
+                  sidebarMenu === "profile" ? "text-blue-600" : "text-gray-600"
                 } inline-block mr-2`}
               />
               Profile

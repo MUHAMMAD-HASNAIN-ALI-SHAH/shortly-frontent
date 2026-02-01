@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import useNavigationStore from "./useNavigationStore";
 import useFormStore from "./useFormStore";
 import useLoadingStore from "./useLoadingStore";
+import useLimitStore from "./useLimitStore";
 
 interface QrCode {
     _id: string;
@@ -44,7 +45,9 @@ const useQrCodeStore = create<QrCodeStoreInterface>((set, get) => ({
                 title: qrCodeInputs.title,
             });
             set((state) => ({ qrCodes: [res.data.result, ...state.qrCodes] }));
-            useNavigationStore.getState().setQrCodeNavigation("qr");
+            useLimitStore.getState().reduceLimit("qr-code");
+            useNavigationStore.getState().setSidebarMenu("qr-code");
+            useNavigationStore.getState().setQrCodeNavigation("qr-code");
             useFormStore.getState().resetQrCodeInputs();
             useLoadingStore.getState().setQrCodeButtonLoading(false);
             toast.success("QR Code generated successfully");

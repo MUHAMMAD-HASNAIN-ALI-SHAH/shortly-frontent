@@ -9,7 +9,6 @@ import useShortUrlStore from "../../store/useShortUrlStore";
 const ShortUrl = () => {
   const { shortUrlNavigation } = useNavigationStore();
   const { getShortUrls } = useShortUrlStore();
-
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
@@ -181,7 +180,7 @@ const ShortUrlHeader = ({
 =========================== */
 
 const ShortUrlForm = () => {
-  const { urlLimit } = useLimitStore();
+  const { shortUrlLimit } = useLimitStore();
   const { setShortUrlNavigation } = useNavigationStore();
   const { shortUrlButtonLoading } = useLoadingStore();
   const { handleShortUrlInputChange, shortUrlInputs } = useFormStore();
@@ -211,7 +210,7 @@ const ShortUrlForm = () => {
             Fill in the details to create a new short link.
           </p>
           <p className="text-sm text-blue-600 font-medium">
-            You have <span className="font-bold">{urlLimit}</span> more links
+            You have <span className="font-bold">{shortUrlLimit}</span> more links
             to create.
           </p>
         </div>
@@ -294,7 +293,7 @@ const ShortUrlForm = () => {
         )}
 
         <p className="text-sm text-blue-600 mb-6 font-medium">
-          You have <span className="font-bold">{urlLimit}</span> more QR
+          You have <span className="font-bold">{shortUrlLimit}</span> more QR
           codes available.
         </p>
 

@@ -12,7 +12,7 @@ interface NavigationState {
 }
 
 const useNavigationStore = create<NavigationState>((set) => ({
-  sidebarMenu: "Home",
+  sidebarMenu: "home",
   quickCreate: "short-url",
   shortUrlNavigation: "short-url",
   qrCodeNavigation: "qr-code",

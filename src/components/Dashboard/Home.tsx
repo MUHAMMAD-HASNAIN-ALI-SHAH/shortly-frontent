@@ -1,17 +1,26 @@
 import { Link2, ScanBarcode, Loader2 } from "lucide-react";
-import useLinkStore from "../../store/useLinkStore";
 import useNavigationStore from "../../store/useNavigationStore";
 import useFormStore from "../../store/useFormStore";
 import useLoadingStore from "../../store/useLoadingStore";
 import useLimitStore from "../../store/useLimitStore";
+import useQrCodeStore from "../../store/useQrCodeStore";
+import useShortUrlStore from "../../store/useShortUrlStore";
 
 const Home = () => {
-  const { previewLink, handleQuickCreateSubmit } =
-    useLinkStore();
-    const { urlLimit, qrLimit,} = useLimitStore();
-  const { quickCreateInput, handlequickCreateInput } = useFormStore();
+  const { shortUrlLimit, qrCodeLimit, } = useLimitStore();
+  const { handleQrCodeInputChange, handleShortUrlInputChange, shortUrlInputs, qrCodeInputs } = useFormStore();
   const { quickCreate, setQuickCreate } = useNavigationStore();
-  const { quickCreateButtonLoading } = useLoadingStore();
+  const { createQrCode } = useQrCodeStore();
+  const { createShortUrl } = useShortUrlStore();
+  const { shortUrlButtonLoading, qrCodeButtonLoading } = useLoadingStore();
+
+  const handleQuickCreateSubmit = () => {
+    if (quickCreate === "short-url") {
+      createShortUrl();
+    } else if (quickCreate === "qr-code") {
+      createQrCode();
+    }
+  };
 
   return (
     <div className="w-full p-5">
@@ -36,25 +45,23 @@ const Home = () => {
           <h1 className="text-2xl font-bold">Quick Create</h1>
           <div className="flex flex-col gap-5 sm:flex-row items-center space-x-7 sm:space-x-4">
             <button
-              onClick={() => setQuickCreate("link")}
-              className={`flex items-center px-4 py-2 rounded-full cursor-pointer text-nowrap ${
-                quickCreate === "link"
-                  ? "bg-blue-600 text-white"
-                  : "border border-blue-300 text-black"
-              } transition`}
-              disabled={quickCreateButtonLoading}
+              onClick={() => setQuickCreate("short-url")}
+              className={`flex items-center px-4 py-2 rounded-full cursor-pointer text-nowrap ${quickCreate === "short-url"
+                ? "bg-blue-600 text-white"
+                : "border border-blue-300 text-black"
+                } transition`}
+              disabled={shortUrlButtonLoading || qrCodeButtonLoading}
             >
               <Link2 className="w-5 h-5 mr-2 rotate-45" />
               Create Link
             </button>
             <button
-              onClick={() => setQuickCreate("qr")}
-              className={`flex items-center px-4 py-2 rounded-full cursor-pointer text-nowrap ${
-                quickCreate === "qr"
-                  ? "bg-blue-600 text-white"
-                  : "border border-blue-300 text-black"
-              } transition`}
-              disabled={quickCreateButtonLoading}
+              onClick={() => setQuickCreate("qr-code")}
+              className={`flex items-center px-4 py-2 rounded-full cursor-pointer text-nowrap ${quickCreate === "qr-code"
+                ? "bg-blue-600 text-white"
+                : "border border-blue-300 text-black"
+                } transition`}
+              disabled={shortUrlButtonLoading || qrCodeButtonLoading}
             >
               <ScanBarcode className="w-5 h-5 mr-2 rotate-45" />
               Create QR Code
@@ -65,32 +72,32 @@ const Home = () => {
         {/* Input Section */}
         <div className="mt-5">
           <p className="text-sm font-semibold">
-            {quickCreate === "link"
-              ? `You can create ${urlLimit} more short links`
-              : `You can create ${qrLimit} more QR codes`}
+            {quickCreate === "short-url"
+              ? `You can create ${shortUrlLimit} more short links`
+              : `You can create ${qrCodeLimit} more QR codes`}
           </p>
           <div className="mt-5">
             <label className="font-semibold">Enter your destination URL</label>
             <div className="w-full flex flex-col md:flex-row gap-5 mt-2">
               <input
                 type="text"
-                value={quickCreateInput}
-                onChange={(e) => handlequickCreateInput(e.target.value)}
+                value={quickCreate === "short-url" ? shortUrlInputs.url : qrCodeInputs.url}
+                onChange={(e) => quickCreate === "short-url" ? handleShortUrlInputChange("url", e.target.value) : handleQrCodeInputChange("url", e.target.value)}
                 className="w-full border border-blue-200 rounded-md focus:ring-2 focus:ring-blue-600 px-3 py-2"
                 placeholder="Enter your destination URL"
-                disabled={quickCreateButtonLoading}
+                disabled={shortUrlButtonLoading || qrCodeButtonLoading}
               />
               <button
                 onClick={handleQuickCreateSubmit}
                 className="bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition whitespace-nowrap flex items-center justify-center min-w-[170px]"
-                disabled={quickCreateButtonLoading}
+                disabled={shortUrlButtonLoading || qrCodeButtonLoading}
               >
-                {quickCreateButtonLoading ? (
+                {shortUrlButtonLoading || qrCodeButtonLoading ? (
                   <>
                     <Loader2 className="animate-spin mr-2 size-4" />
                     Processing...
                   </>
-                ) : quickCreate === "link" ? (
+                ) : quickCreate === "short-url" ? (
                   "Create Short Link"
                 ) : (
                   "Generate QR Code"
@@ -101,7 +108,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Preview Section */}
+      {/* Preview Section
       {previewLink && previewLink.type === "short-url" && (
         <div className="flex flex-col gap-5 lg:flex-row items-start justify-between mb-4 bg-white p-4 rounded-lg shadow-sm mt-5">
           <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-start items-center space-x-2">
@@ -129,7 +136,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
