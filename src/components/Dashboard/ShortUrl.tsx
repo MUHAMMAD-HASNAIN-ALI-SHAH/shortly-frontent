@@ -1,5 +1,5 @@
 import { Copy, Link2, Loader2, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useLoadingStore from "../../store/useLoadingStore";
 import useNavigationStore from "../../store/useNavigationStore";
 import useFormStore from "../../store/useFormStore";
@@ -8,12 +8,7 @@ import useShortUrlStore from "../../store/useShortUrlStore";
 
 const ShortUrl = () => {
   const { shortUrlNavigation } = useNavigationStore();
-  const { getShortUrls } = useShortUrlStore();
   const [searchText, setSearchText] = useState("");
-
-  useEffect(() => {
-    getShortUrls();
-  }, [getShortUrls]);
 
   return (
     <div className="w-full h-full bg-gray-100 p-4">

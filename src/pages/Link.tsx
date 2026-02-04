@@ -1,77 +1,52 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../lib/axios";
 
-interface LinkData {
-  index: number;
-  userId: string;
-  type: string;
-  title: string;
-  originalUrl: string;
-  shortUrl: string;
-  clicks: number;
-  isPasswordProtected: boolean;
-  password?: string;
-}
+// interface LinkData {
+//   index: number;
+//   userId: string;
+//   title: string;
+//   originalUrl: string;
+//   shortUrl: string;
+//   clicks: number;
+//   isPasswordProtected: boolean;
+//   password?: string;
+// }
 
 const Link: React.FC = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  const [, setLinkData] = useState<LinkData | null>(null);
   const [password, setPassword] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [showPasswordForm, setShowPasswordForm] = useState<boolean>(false);
 
-  const fetchedRef = useRef<boolean>(false); // Prevent double fetch in dev
+  // const fetchedRef = useRef<boolean>(false);
 
   useEffect(() => {
-    const fetchLinkData = async () => {
-      if (fetchedRef.current) return;
-      fetchedRef.current = true;
-
+    const fetchLink = async () => {
       try {
-        const response = await axiosInstance.get<{ url: LinkData }>(
-          `/api/v2/link/redirect?index=${id}`
+        const res = await axiosInstance.get(
+          `/api/v2/short-url/redirect?index=${id}`
         );
-        const data = response.data.url;
 
-        if (!data || !data.shortUrl) {
-          setError("No original URL found.");
-          setLoading(false);
-          return;
-        }
-
-        setLinkData(data);
-
-        // If no password, redirect immediately and increment clicks
-        if (!data.isPasswordProtected) {
-          try {
-            await axiosInstance.post(`/api/v2/link/increment-clicks`, {
-              index: id,
-            });
-          } catch (err) {
-            console.error("Error incrementing clicks:", err);
-          }
-          redirectToOriginalUrl(data.originalUrl);
+        if (!res.data.isPasswordProtected) {
+          redirectToOriginalUrl(res.data.originalUrl);
         } else {
           setShowPasswordForm(true);
         }
 
         setLoading(false);
       } catch (err) {
-        console.error("Redirect error:", err);
-        setError("Something went wrong while fetching the link.");
+        console.error(err);
+        setError("Link not found or expired.");
         setLoading(false);
       }
     };
 
-    if (id) fetchLinkData();
-    else {
-      setError("Missing link ID.");
-      setLoading(false);
-    }
+    if (id) fetchLink();
   }, [id]);
+
 
   const redirectToOriginalUrl = (url: string) => {
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -80,41 +55,29 @@ const Link: React.FC = () => {
     window.location.href = url;
   };
 
-  const handlePasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setPasswordError("");
 
     if (!password) {
-      setPasswordError("Please enter the password.");
+      setPasswordError("Please enter password");
       return;
     }
 
     try {
-      const response = await axiosInstance.post<{ success: boolean; originalUrl?: string; msg?: string }>(
-        `/api/v2/link/verify-password`,
-        {
-          index: id,
-          password,
-        }
+      const res = await axiosInstance.post(
+        `/api/v2/short-url/verify-password`,
+        { index: id, password }
       );
 
-      if (response.data.success && response.data.originalUrl) {
-        // Increment clicks before redirect
-        try {
-          await axiosInstance.post(`/api/v2/link/increment-clicks`, {
-            index: id,
-          });
-        } catch (err) {
-          console.error("Error incrementing clicks:", err);
-        }
-        redirectToOriginalUrl(response.data.originalUrl);
-      } else {
-        setPasswordError(response.data.msg || "Incorrect password. Please try again.");
-      }
-    } catch (err) {
-      console.error("Password verification error:", err);
-      setPasswordError("Something went wrong. Please try again.");
+      redirectToOriginalUrl(res.data.originalUrl);
+    } catch (err: any) {
+      setPasswordError(
+        err.response?.data?.message || "Incorrect password"
+      );
     }
   };
+
 
   if (loading) {
     return (

@@ -5,6 +5,7 @@ import useNavigationStore from "./useNavigationStore";
 import useFormStore from "./useFormStore";
 import useLoadingStore from "./useLoadingStore";
 import useLimitStore from "./useLimitStore";
+import useAuthStore from "./useAuthStore";
 
 interface ShortUrl {
     _id: string;
@@ -36,6 +37,7 @@ const useShortUrlStore = create<ShortUrlStoreInterface>((set, get) => ({
     createShortUrl: async () => {
         try {
             const { shortUrlInputs } = useFormStore.getState();
+            console.log("Creating short URL with inputs:", shortUrlInputs);
             if (!shortUrlInputs.url) {
                 toast.error("Please enter a valid URL and title");
                 console.log("Invalid URL input");
@@ -45,6 +47,7 @@ const useShortUrlStore = create<ShortUrlStoreInterface>((set, get) => ({
             const res = await axiosInstance.post("/api/v2/short-url", {
                 originalUrl: shortUrlInputs.url,
                 title: shortUrlInputs.title,
+                password: shortUrlInputs.password || undefined,
             });
             set((state) => ({ shortUrls: [res.data.result, ...state.shortUrls] }));
             useLimitStore.getState().reduceLimit("short-url");
@@ -54,8 +57,10 @@ const useShortUrlStore = create<ShortUrlStoreInterface>((set, get) => ({
             useLoadingStore.getState().setShortUrlButtonLoading(false);
             toast.success("Short URL created successfully");
         } catch (err: any) {
-            console.error("Error creating short URL:", err);
-            toast.error(err?.response?.data?.msg || "Failed to create short URL");
+            if(err.response?.status === 403){
+                useAuthStore.getState().logout();
+            }
+            toast.error(err?.response?.data?.message || "Failed to create short URL");
         } finally {
             useLoadingStore.getState().setShortUrlButtonLoading(false);
         }
@@ -72,9 +77,11 @@ const useShortUrlStore = create<ShortUrlStoreInterface>((set, get) => ({
             const res = await axiosInstance.get("/api/v2/short-url");
             set({ shortUrls: res.data.shortUrls });
         } catch (err: any) {
-            console.log(err);
-            toast.error(err?.response?.data?.msg || "Failed to load short URLs");
-            set({ getShortUrlsError: { message: err?.response?.data?.msg || "Failed to load short URLs", status: true } });
+            if(err.response?.status === 403){
+                useAuthStore.getState().logout();
+            }
+            toast.error(err?.response?.data?.message || "Failed to load short URLs");
+            set({ getShortUrlsError: { message: err?.response?.data?.message || "Failed to load short URLs", status: true } });
         } finally {
             useLoadingStore.getState().setFetchLinksLoader(false);
             set({ getShortUrlsLoader: false });

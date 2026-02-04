@@ -8,15 +8,27 @@ import QrCode from "../components/Dashboard/QrCode";
 import useNavigationStore from "../store/useNavigationStore";
 import useLimitStore from "../store/useLimitStore";
 import { useEffect } from "react";
+import useShortUrlStore from "../store/useShortUrlStore";
+import useQrCodeStore from "../store/useQrCodeStore";
 
 const Dashboard = () => {
   const { sidebarMenu } = useNavigationStore();
+    const { getShortUrls } = useShortUrlStore();
+  const { getQrCodes } = useQrCodeStore();
 
   const { getLimit } = useLimitStore();
 
   useEffect(() => {
     getLimit();
   }, [getLimit]);
+
+  useEffect(() => {
+    getQrCodes();
+  }, [getQrCodes]);
+
+  useEffect(() => {
+    getShortUrls();
+  }, [getShortUrls]);
 
   return (
     <div className="w-full h-screen bg-gray-100">

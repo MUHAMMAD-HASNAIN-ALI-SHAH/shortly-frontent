@@ -5,6 +5,7 @@ import useNavigationStore from "./useNavigationStore";
 import useFormStore from "./useFormStore";
 import useLoadingStore from "./useLoadingStore";
 import useLimitStore from "./useLimitStore";
+import useAuthStore from "./useAuthStore";
 
 interface QrCode {
     _id: string;
@@ -52,8 +53,10 @@ const useQrCodeStore = create<QrCodeStoreInterface>((set, get) => ({
             useLoadingStore.getState().setQrCodeButtonLoading(false);
             toast.success("QR Code generated successfully");
         } catch (err: any) {
-            console.error("Error creating QR code:", err);
-            toast.error(err?.response?.data?.msg || "Failed to create QR code");
+            if(err.response?.status === 403){
+                useAuthStore.getState().logout();
+            }
+            toast.error(err?.response?.data?.message || "Failed to create QR code");
         } finally {
             useLoadingStore.getState().setQrCodeButtonLoading(false);
         }
@@ -70,8 +73,11 @@ const useQrCodeStore = create<QrCodeStoreInterface>((set, get) => ({
             const res = await axiosInstance.get("/api/v3/qr-code");
             set({ qrCodes: res.data.qrCodes });
         } catch (err: any) {
-            toast.error(err?.response?.data?.msg || "Failed to load QR codes");
-            set({ getQrCodesError: { message: err?.response?.data?.msg || "Failed to load QR codes", status: true } });
+            toast.error(err?.response?.data?.message || "Failed to load QR codes");
+            if(err.response?.status === 403){
+                useAuthStore.getState().logout();
+            }
+            set({ getQrCodesError: { message: err?.response?.data?.message || "Failed to load QR codes", status: true } });
         } finally {
             useLoadingStore.getState().setFetchLinksLoader(false);
             set({ getQrCodesLoader: false });

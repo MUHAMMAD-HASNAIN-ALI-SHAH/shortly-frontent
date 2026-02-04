@@ -50,7 +50,7 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ authLoader: false });
       return 1;
     } catch (error: any) {
-      toast.error(error?.response?.data?.msg || "Signup failed");
+      toast.error(error?.response?.data?.message || "Signup failed");
       set({ authLoader: false });
       return 0;
     }
@@ -64,7 +64,7 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ authLoader: false });
       return 1;
     } catch (error: any) {
-      toast.error(error?.response?.data?.msg || "Verification failed");
+      toast.error(error?.response?.data?.message || "Verification failed");
       set({ authLoader: false });
       return 0;
     }
@@ -78,11 +78,11 @@ const useAuthStore = create<AuthState>((set) => ({
         user: response.data.user,
         isAuthenticated: true,
       });
-      toast.success(response.data.msg);
+      toast.success(response.data.message);
       set({ authLoader: false });
       return 1;
     } catch (error: any) {
-      toast.error(error?.response?.data?.msg || "Login failed");
+      toast.error(error?.response?.data?.message || "Login failed");
       set({ authLoader: false });
       return 0;
     }
@@ -102,7 +102,7 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ authLoader: false });
       return 1;
     } catch (error: any) {
-      toast.error(error?.response?.data?.msg || "Login failed");
+      toast.error(error?.response?.data?.message || "Login failed");
       set({ authLoader: false });
       return 0;
     }
@@ -128,7 +128,7 @@ const useAuthStore = create<AuthState>((set) => ({
       await axiosInstance.get("/api/v1/auth/logout");
       toast.success("Logged out successfully");
     } catch (error: any) {
-      toast.error(error?.response?.data?.msg || "Logout failed");
+      toast.error(error?.response?.data?.message || "Logout failed");
     } finally {
       set({ user: null, isAuthenticated: false });
     }
@@ -141,7 +141,7 @@ const useAuthStore = create<AuthState>((set) => ({
         import.meta.env.VITE_API_URL
       }/api/v1/auth/google`;
     } catch (error: any) {
-      toast.error(error?.response?.data?.msg || "Google Signin failed");
+      toast.error(error?.response?.data?.message || "Google Signin failed");
     } finally {
     }
   },

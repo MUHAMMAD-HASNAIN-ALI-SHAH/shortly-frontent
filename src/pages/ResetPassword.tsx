@@ -11,8 +11,8 @@ const ResetPassword = () => {
 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false); // loader for code validation
-  const [submitting, setSubmitting] = useState(false); // loader for form submit
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -30,7 +30,7 @@ const ResetPassword = () => {
       } catch (error: any) {
         console.error("Error fetching reset password request:", error);
         setError(
-          error.response?.data?.msg || "Failed to verify reset password request"
+          error.response?.data?.message || "Failed to verify reset password request"
         );
         setLoading(false);
       }
@@ -72,8 +72,8 @@ const ResetPassword = () => {
       );
       navigate("/login");
     } catch (error: any) {
-      toast.error(error?.response?.data?.msg || "Failed to reset password");
-      setError(error.response?.data?.msg || "Failed to reset password");
+      toast.error(error?.response?.data?.message || "Failed to reset password");
+      setError(error.response?.data?.message || "Failed to reset password");
     } finally {
       setSubmitting(false);
     }
@@ -127,9 +127,8 @@ const ResetPassword = () => {
             <button
               type="submit"
               disabled={submitting}
-              className={`flex items-center justify-center gap-2 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-all duration-200 ${
-                submitting ? "opacity-70 cursor-not-allowed" : ""
-              }`}
+              className={`flex items-center justify-center gap-2 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-all duration-200 ${submitting ? "opacity-70 cursor-not-allowed" : ""
+                }`}
             >
               {submitting && <Loader2 className="h-5 w-5 animate-spin" />}
               Reset Password

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axiosInstance from "../lib/axios";
 import { toast } from "react-toastify";
+import useAuthStore from "./useAuthStore";
 
 interface LimitStoreInterface {
     shortUrlLimit: number;
@@ -28,10 +29,13 @@ const useLimitStore = create<LimitStoreInterface>((set) => ({
             const res = await axiosInstance.get("/api/v4/limit");
             set({ shortUrlLimit: res.data.urls, qrCodeLimit: res.data.qrCodes });
         } catch (err: any) {
-            toast.error(err?.response?.data?.msg || "Failed to get limits");
+            toast.error(err?.response?.data?.message || "Failed to get limits");
+            if(err.response?.status === 403){
+                useAuthStore.getState().logout();
+            }
             set({
                 getLimitError: {
-                    message: err?.response?.data?.msg || "Failed to get limits",
+                    message: err?.response?.data?.message || "Failed to get limits",
                     status: true,
                 },
             });

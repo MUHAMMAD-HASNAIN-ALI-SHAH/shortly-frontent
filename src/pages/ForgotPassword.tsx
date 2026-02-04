@@ -23,7 +23,7 @@ const ForgotPassword = () => {
       })
       .catch((error) => {
         console.error("Error sending reset email:", error);
-        toast.error(error.response?.data?.msg || "Failed to send reset email");
+        toast.error(error.response?.data?.message || "Failed to send reset email");
       })
       .finally(() => {
         setLoader(false);

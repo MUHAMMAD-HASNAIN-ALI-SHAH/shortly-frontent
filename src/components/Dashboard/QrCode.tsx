@@ -1,5 +1,5 @@
 import { Download, Loader2, QrCode as QrIcon, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import useFormStore from "../../store/useFormStore";
 import useLimitStore from "../../store/useLimitStore";
@@ -8,12 +8,7 @@ import useNavigationStore from "../../store/useNavigationStore";
 import useQrCodeStore from "../../store/useQrCodeStore";
 
 const QrCode = () => {
-  const { getQrCodes } = useQrCodeStore();
   const { qrCodeNavigation } = useNavigationStore();
-
-  useEffect(() => {
-    getQrCodes();
-  }, [getQrCodes]);
 
   return (
     <div className="w-full h-full bg-gray-100 p-4">
@@ -248,11 +243,10 @@ const QrCodeCreateForm = () => {
         <button
           type="submit"
           disabled={qrCodeButtonLoading}
-          className={`w-full py-2 rounded-lg font-semibold transition ${
-            qrCodeButtonLoading
+          className={`w-full py-2 rounded-lg font-semibold transition ${qrCodeButtonLoading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700"
-          } text-white`}
+            } text-white`}
         >
           {qrCodeButtonLoading ? (
             <span className="flex justify-center items-center gap-2">
